@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/Scissor.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Player.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.742395
+height = 0.974154
+
+[node name="KinematicBody" type="KinematicBody" groups=[
+"Player",
+]]
+script = ExtResource( 2 )
+MAX_SPEED = 50
+ACCELERATION = 20
+
+[node name="Scissor" parent="." instance=ExtResource( 1 )]
+transform = Transform( -20, 0, -6.51683e-06, 0, 20, 0, 6.51683e-06, 0, -20, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( -1.62921e-07, -1, 0, -1.62921e-07, 2.65431e-14, -1, 1, -1.62921e-07, -1.62921e-07, 0, 1, 0 )
+shape = SubResource( 1 )
+
+[node name="Head" type="Spatial" parent="."]
+
+[node name="Camera" type="Camera" parent="Head"]
+transform = Transform( 1, 0, 0, 0, 0.927184, 0.374607, 0, -0.374607, 0.927184, 0, 4, 6 )
+current = true
+
+[node name="Position3D" type="Position3D" parent="Head"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Area" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+transform = Transform( -1.62921e-07, -1, 0, -1.62921e-07, 2.65431e-14, -1, 1, -1.62921e-07, -1.62921e-07, 0, 1, 0 )
+shape = SubResource( 1 )
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="area_entered" from="Area" to="." method="_on_Area_area_entered"]
