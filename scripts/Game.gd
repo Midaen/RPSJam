@@ -5,9 +5,9 @@ enum GAMETYPE{
 	FEUILLE,
 	CISEAU
 }
-var ciseau_spawn = Vector3(10,1,-10)
-var feuille_spawn = Vector3(10,1,10)
-var pierre_spawn = Vector3(-10,1,0)
+var ciseau_spawn = Vector3(20,1,-20)
+var feuille_spawn = Vector3(20,1,20)
+var pierre_spawn = Vector3(-20,1,0)
 onready var player = preload("res://scenes/Player.tscn")
 onready var dummy = preload("res://scenes/Dummy.tscn")
 export var player_team = GAMETYPE.CISEAU
@@ -23,11 +23,15 @@ func create_ent(team,type):
 	tmp_dummy.game_type = team
 	if team == GAMETYPE.CISEAU : 
 		tmp_dummy.translation = ciseau_spawn
+		tmp_dummy.initial_spawn = ciseau_spawn
 		tmp_dummy.game_type = GAMETYPE.CISEAU
 	if team == GAMETYPE.PIERRE : 
 		tmp_dummy.translation = pierre_spawn
 		tmp_dummy.game_type = GAMETYPE.PIERRE
+		tmp_dummy.initial_spawn = pierre_spawn
 	if team == GAMETYPE.FEUILLE : 
 		tmp_dummy.translation = feuille_spawn
 		tmp_dummy.game_type = GAMETYPE.FEUILLE
+		tmp_dummy.initial_spawn = feuille_spawn
 	$Entities.add_child(tmp_dummy)
+

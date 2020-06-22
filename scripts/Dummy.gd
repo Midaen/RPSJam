@@ -6,10 +6,13 @@ enum GAMETYPE{
 	CISEAU
 }
 onready var timer = $Timer
+onready var death_timer = $DeathTimer
 export var ACCELERATION = 5
 export var MAX_SPEED = 100
 export var game_type = GAMETYPE.CISEAU
 onready var bullet = preload("res://scenes/Bullet.tscn")
+export var initial_spawn = Vector3.ZERO
+var is_alive = true
 
 var velocity = Vector3.ZERO
 
@@ -22,27 +25,33 @@ func _ready():
 
 
 func _physics_process(delta):
-	if timer.is_stopped():
-		fire()
-		timer.set_wait_time(3)
-		timer.start()
-	if target:
-		var result = space_state.intersect_ray(global_transform.origin, target.global_transform.origin)
-		if result.collider.is_in_group("Player"):
-			look_at(target.global_transform.origin, Vector3.UP)
-			move_to_target(delta)
+	if is_alive:
+		if timer.is_stopped():
+			fire()
+			timer.set_wait_time(3)
+			timer.start()
+		if target:
+			var result = space_state.intersect_ray(global_transform.origin, target.global_transform.origin)
+			if result and result.collider.is_in_group("Player") and test_target(target):
+				look_at(target.global_transform.origin, Vector3.UP)
+				move_to_target(delta)
+			if result and result.collider.is_in_group("Dummy") and test_target(target) :
+				look_at(target.global_transform.origin, Vector3.UP)
+				move_to_target(delta)
+			if result and result.collider.is_in_group("Player") and !test_target(target) :
+				var new_vec = target.global_transform.inverse()
+				look_at(new_vec.origin, Vector3.DOWN)
+				move_to_target(delta)
 
 func _on_HitBox_area_entered(area):
-	if area.is_in_group("Bullet"):
-		if game_type == GAMETYPE.CISEAU and area.game_type == GAMETYPE.PIERRE:
-			queue_free()
-			print("a")
-		elif game_type == GAMETYPE.PIERRE and area.game_type == GAMETYPE.FEUILLE:
-			queue_free()
-			print("b")
-		elif game_type == GAMETYPE.FEUILLE and area.game_type == GAMETYPE.CISEAU:
-			queue_free()
-			print("c")
+	if is_alive:
+		if area.is_in_group("Bullet"):
+			if game_type == GAMETYPE.CISEAU and area.game_type == GAMETYPE.PIERRE:
+				death()
+			elif game_type == GAMETYPE.PIERRE and area.game_type == GAMETYPE.FEUILLE:
+				death()
+			elif game_type == GAMETYPE.FEUILLE and area.game_type == GAMETYPE.CISEAU:
+				death()
 		
 
 func fire():
@@ -73,3 +82,29 @@ func _on_Vision_body_exited(body):
 	if body.is_in_group("Player"):
 		target = null
 		print(body.name + " exited")
+
+
+func _on_DeathTimer_timeout():
+	respawn()
+
+
+func respawn():
+	death_timer.stop()
+	is_alive = true
+	$".".translation = initial_spawn
+
+func death():
+	#playback.travel("Death")
+	death_timer.set_wait_time(3)
+	death_timer.start()
+	is_alive = false
+
+func test_target(target):
+	if game_type == GAMETYPE.PIERRE and target.game_type == GAMETYPE.CISEAU:
+		return true
+	elif game_type == GAMETYPE.FEUILLE and target.game_type == GAMETYPE.PIERRE:
+		return true
+	elif game_type == GAMETYPE.CISEAU and target.game_type == GAMETYPE.FEUILLE:
+		return true
+	else : 
+		return false

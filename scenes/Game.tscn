@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scripts/Game.gd" type="Script" id=1]
+[ext_resource path="res://scripts/Pause.gd" type="Script" id=2]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -13,8 +14,63 @@ script = ExtResource( 1 )
 [node name="Background" type="Spatial" parent="."]
 
 [node name="MeshInstance" type="MeshInstance" parent="Background"]
-transform = Transform( 100, 0, 0, 0, 0.1, 0, 0, 0, 100, 0, -0.1, 0 )
+transform = Transform( 100, 0, 0, 0, 0.1, 0, 0, 0, 100, 0, -1, 0 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 
 [node name="Entities" type="Spatial" parent="."]
+
+[node name="Pause" type="Control" parent="."]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="Pause"]
+margin_left = 288.0
+margin_right = 968.0
+margin_bottom = 600.0
+color = Color( 0.239216, 0.227451, 0.227451, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonContinue" type="Button" parent="Pause"]
+margin_left = 512.0
+margin_top = 224.0
+margin_right = 744.0
+margin_bottom = 304.0
+text = "Continue"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonLeave" type="Button" parent="Pause"]
+margin_left = 512.0
+margin_top = 368.0
+margin_right = 744.0
+margin_bottom = 448.0
+text = "Leave"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Pause"]
+anchor_right = 0.141
+anchor_bottom = 0.12
+margin_left = 536.0
+margin_top = 88.0
+margin_right = 559.616
+margin_bottom = 104.0
+text = "Paused"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Pause/ButtonContinue" to="Pause" method="_on_ButtonContinue_pressed"]
+[connection signal="pressed" from="Pause/ButtonLeave" to="Pause" method="_on_ButtonLeave_pressed"]
