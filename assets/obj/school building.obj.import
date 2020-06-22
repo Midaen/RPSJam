@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/school building.obj-5417cd5997aeb16cc6072f6491880d1a.mesh"
+
+[deps]
+
+files=[ "res://.import/school building.obj-5417cd5997aeb16cc6072f6491880d1a.mesh" ]
+
+source_file="res://assets/obj/school building.obj"
+dest_files=[ "res://.import/school building.obj-5417cd5997aeb16cc6072f6491880d1a.mesh", "res://.import/school building.obj-5417cd5997aeb16cc6072f6491880d1a.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

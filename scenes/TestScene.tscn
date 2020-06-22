@@ -1,10 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Scissor.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Dummy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/obj/school building.obj" type="ArrayMesh" id=4]
+
+[sub_resource type="Environment" id=1]
+
+[sub_resource type="PlaneMesh" id=2]
 
 [node name="TestScene" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.99905, 3.71303, -0.246565 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 21.2792, 1, -14.3132 )
@@ -12,10 +18,25 @@ MAX_SPEED = 4
 game_type = 0
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 5 )
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0.605703, 9.94835, 4.49455 )
+environment = SubResource( 1 )
 
 [node name="Dummy" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 
 [node name="Scissor" parent="." instance=ExtResource( 2 )]
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 8.22454, 0, 10.8646 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 48.3396, 0, 0, 0, 48.3396, 0, 0, 0, 48.3396, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="school building" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0.109499, 0.0338309, 0.072914 )
+mesh = ExtResource( 4 )
+material/0 = null
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.999937, -0.0112048, 0, 0.0112048, 0.999937, 0, 9.00401, 6.07495 )
+light_energy = 1.57
