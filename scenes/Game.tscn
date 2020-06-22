@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://scripts/Pause.gd" type="Script" id=2]
+[ext_resource path="res://scenes/Objectif.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -72,5 +73,8 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Objectif" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.038, 1, 0.198 )
 [connection signal="pressed" from="Pause/ButtonContinue" to="Pause" method="_on_ButtonContinue_pressed"]
 [connection signal="pressed" from="Pause/ButtonLeave" to="Pause" method="_on_ButtonLeave_pressed"]
