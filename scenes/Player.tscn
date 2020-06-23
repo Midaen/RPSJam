@@ -17,7 +17,9 @@ ACCELERATION = 20
 [node name="Scissor" parent="." instance=ExtResource( 1 )]
 transform = Transform( -20, 0, -6.51683e-06, 0, 20, 0, 6.51683e-06, 0, -20, 0, 0, 0 )
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
+[node name="CollisionShape" type="CollisionShape" parent="." groups=[
+"Player",
+]]
 transform = Transform( -1.62921e-07, -1, 0, -1.62921e-07, 2.65431e-14, -1, 1, -1.62921e-07, -1.62921e-07, 0, 1, 0 )
 shape = SubResource( 1 )
 
@@ -32,13 +34,20 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2 )
 
 [node name="Timer" type="Timer" parent="."]
 
-[node name="Area" type="Area" parent="."]
+[node name="Area" type="Area" parent="." groups=[
+"Player",
+]]
 
-[node name="CollisionShape" type="CollisionShape" parent="Area"]
+[node name="CollisionShape" type="CollisionShape" parent="Area" groups=[
+"Player",
+]]
 transform = Transform( -1.62921e-07, -1, 0, -1.62921e-07, 2.65431e-14, -1, 1, -1.62921e-07, -1.62921e-07, 0, 1, 0 )
 shape = SubResource( 1 )
 
 [node name="DeathTimer" type="Timer" parent="."]
+
+[node name="RespawnTimer" type="Timer" parent="."]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="area_entered" from="Area" to="." method="_on_Area_area_entered"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
+[connection signal="timeout" from="RespawnTimer" to="." method="_on_RespawnTimer_timeout"]

@@ -9,7 +9,7 @@ albedo_color = Color( 0.054902, 1, 0, 1 )
 size = Vector3( 0.5, 0.5, 0.5 )
 
 [sub_resource type="CylinderShape" id=3]
-radius = 2.3701
+radius = 4.00215
 height = 1.19389
 
 [node name="Objectif" type="Spatial"]
@@ -25,5 +25,5 @@ material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 shape = SubResource( 3 )
-[connection signal="area_entered" from="Area" to="." method="_on_Area_area_entered"]
-[connection signal="area_exited" from="Area" to="." method="_on_Area_area_exited"]
+[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
+[connection signal="body_exited" from="Area" to="." method="_on_Area_body_exited"]

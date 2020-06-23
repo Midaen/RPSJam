@@ -5,6 +5,7 @@ onready var cam = $Head/Camera
 onready var bullet = preload("res://scenes/Bullet.tscn")
 onready var timer = $Timer
 onready var death_timer = $DeathTimer
+onready var respawn_timer = $RespawnTimer
 export var ACCELERATION = 5
 export var MOUSE_SENS = 0.3
 export var CAMERA_ANGLE=0
@@ -12,6 +13,9 @@ var velocity = Vector3()
 var direction = Vector3()
 export var initial_spawn = Vector3.ZERO
 var is_alive = true
+export var objecive_vector = Vector3.ZERO
+export var survive_vector = Vector3.ZERO
+var is_vulnerable = true
 
 
 onready var anim_tree  = $Scissor/AnimationTree
@@ -73,7 +77,7 @@ func _on_Timer_timeout():
 	timer.stop()
 
 func _on_Area_area_entered(area):
-	if is_alive :
+	if is_alive and is_vulnerable:
 		if area.is_in_group("Bullet"):
 			if game_type == GAMETYPE.CISEAU and area.game_type == GAMETYPE.PIERRE:
 				death()
@@ -92,6 +96,9 @@ func respawn():
 	is_alive = true
 	death_timer.stop()
 	$".".translation = initial_spawn
+	respawn_timer.set_wait_time(2)
+	is_vulnerable = false
+	respawn_timer.start()
 
 
 func death():
@@ -102,3 +109,8 @@ func death():
 
 func _on_DeathTimer_timeout():
 	respawn()
+
+
+func _on_RespawnTimer_timeout():
+	respawn_timer.stop()
+	is_vulnerable = true

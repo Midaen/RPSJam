@@ -12,6 +12,8 @@ export var MAX_SPEED = 100
 export var game_type = GAMETYPE.CISEAU
 onready var bullet = preload("res://scenes/Bullet.tscn")
 export var initial_spawn = Vector3.ZERO
+export var objecive_vector = Vector3.ZERO
+export var survive_vector = Vector3.ZERO
 var is_alive = true
 
 var velocity = Vector3.ZERO
@@ -34,14 +36,15 @@ func _physics_process(delta):
 			var result = space_state.intersect_ray(global_transform.origin, target.global_transform.origin)
 			if result and result.collider.is_in_group("Player") and test_target(target):
 				look_at(target.global_transform.origin, Vector3.UP)
-				move_to_target(delta)
 			if result and result.collider.is_in_group("Dummy") and test_target(target) :
 				look_at(target.global_transform.origin, Vector3.UP)
-				move_to_target(delta)
 			if result and result.collider.is_in_group("Player") and !test_target(target) :
-				var new_vec = target.global_transform.inverse()
-				look_at(new_vec.origin, Vector3.DOWN)
-				move_to_target(delta)
+				look_at(survive_vector, Vector3.UP)
+			move_to_target(delta)
+		else :
+			look_at(objecive_vector, Vector3.UP)
+			move_to_target(delta)
+
 
 func _on_HitBox_area_entered(area):
 	if is_alive:
@@ -64,12 +67,14 @@ func fire():
 func _on_Timer_timeout():
 	timer.stop()
 	
-func deplacement(delta):
-	pass
 
 
 func move_to_target(delta):
-	var direction = (target.transform.origin - transform.origin).normalized()
+	var direction
+	if target :
+		direction = (target.transform.origin - transform.origin).normalized()
+	else : 
+		direction = (objecive_vector - transform.origin).normalized()
 	move_and_slide(direction * MAX_SPEED *3 * delta, Vector3.UP)
 
 func _on_Vision_body_entered(body):

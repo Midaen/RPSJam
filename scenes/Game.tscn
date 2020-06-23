@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://scripts/Pause.gd" type="Script" id=2]
 [ext_resource path="res://scenes/Objectif.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/FinPartie.gd" type="Script" id=4]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -32,9 +33,8 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="Pause"]
-margin_left = 288.0
-margin_right = 968.0
-margin_bottom = 600.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 color = Color( 0.239216, 0.227451, 0.227451, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -74,7 +74,90 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Objectif" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.038, 1, 0.198 )
+[node name="ObjectifCiseau" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.5, 20 )
+
+[node name="ObjectifPierre" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0.5, 0 )
+game_type = 0
+
+[node name="ObjectifFeuille" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.5, -20 )
+game_type = 1
+
+[node name="FinPartie" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="FinPartie"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.239216, 0.227451, 0.227451, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelVictoire" type="Label" parent="FinPartie"]
+margin_left = 344.0
+margin_top = 168.0
+margin_right = 664.0
+margin_bottom = 248.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HUD" type="Control" parent="."]
+anchor_left = 0.008
+anchor_right = 0.25
+anchor_bottom = 0.227
+margin_left = -8.192
+margin_bottom = -0.200012
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelPierre" type="Label" parent="HUD"]
+margin_left = 16.0
+margin_top = 24.0
+margin_right = 56.0
+margin_bottom = 38.0
+text = "Test"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Entete" type="Label" parent="HUD"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 55.0
+margin_bottom = 22.0
+text = "Score : "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelCiseau" type="Label" parent="HUD"]
+anchor_left = -0.031
+anchor_bottom = 0.294
+margin_left = 23.936
+margin_top = 40.0
+margin_right = 56.0
+margin_bottom = 14.016
+text = "TEst"
+
+[node name="LabelFeuille" type="Label" parent="HUD"]
+margin_left = 16.0
+margin_top = 56.0
+margin_right = 56.0
+margin_bottom = 70.0
+text = "Test"
 [connection signal="pressed" from="Pause/ButtonContinue" to="Pause" method="_on_ButtonContinue_pressed"]
 [connection signal="pressed" from="Pause/ButtonLeave" to="Pause" method="_on_ButtonLeave_pressed"]
+[connection signal="fin_capture" from="ObjectifCiseau" to="FinPartie" method="_on_Objectif_fin_capture"]
+[connection signal="fin_capture" from="ObjectifPierre" to="FinPartie" method="_on_Objectif_fin_capture"]
+[connection signal="fin_capture" from="ObjectifFeuille" to="FinPartie" method="_on_Objectif_fin_capture"]
