@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/CiseauxLowPoly.material" type="Material" id=1]
+[ext_resource path="res://assets/obj/ciseaux_high.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://assets/obj/ciseaux_low_poly.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://assets/Ciseaux.material" type="Material" id=4]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="ciseaux_high" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.61933, 1.46342, 3.23023 )
+mesh = ExtResource( 2 )
+material/0 = ExtResource( 4 )
+
+[node name="ciseaux_low_poly" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28.61, 1.4475, 1.0882 )
+mesh = ExtResource( 3 )
+material/0 = ExtResource( 1 )

@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/ciseaux_low_poly.obj-3342e11fd7ea5f677173906ece831616.mesh"
+
+[deps]
+
+files=[ "res://.import/ciseaux_low_poly.obj-3342e11fd7ea5f677173906ece831616.mesh" ]
+
+source_file="res://assets/obj/ciseaux_low_poly.obj"
+dest_files=[ "res://.import/ciseaux_low_poly.obj-3342e11fd7ea5f677173906ece831616.mesh", "res://.import/ciseaux_low_poly.obj-3342e11fd7ea5f677173906ece831616.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

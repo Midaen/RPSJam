@@ -71,6 +71,7 @@ func update_spawn():
 
 func _process(delta):
 	update_hud()
+	$"HUD/Fps".text = "fps : "+str(delta*1000)
 
 func update_hud():
 	$HUD/LabelCiseau.text = "Ciseaux : "+str(int($ObjectifCiseau.chargement/10))

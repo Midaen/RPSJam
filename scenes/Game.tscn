@@ -156,6 +156,17 @@ margin_top = 56.0
 margin_right = 56.0
 margin_bottom = 70.0
 text = "Test"
+
+[node name="Fps" type="Label" parent="HUD"]
+anchor_bottom = 0.13
+margin_left = 909.599
+margin_top = 5.40062
+margin_right = 1020.6
+margin_bottom = 78.7206
+text = "Fps "
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Pause/ButtonContinue" to="Pause" method="_on_ButtonContinue_pressed"]
 [connection signal="pressed" from="Pause/ButtonLeave" to="Pause" method="_on_ButtonLeave_pressed"]
 [connection signal="fin_capture" from="ObjectifCiseau" to="FinPartie" method="_on_Objectif_fin_capture"]
