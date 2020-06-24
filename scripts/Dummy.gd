@@ -5,6 +5,8 @@ enum GAMETYPE{
 	FEUILLE,
 	CISEAU
 }
+
+onready var anim_tree  = $Scissor/AnimationTree
 onready var timer = $Timer
 onready var death_timer = $DeathTimer
 export var ACCELERATION = 5
@@ -15,6 +17,8 @@ export var initial_spawn = Vector3.ZERO
 export var objecive_vector = Vector3.ZERO
 export var survive_vector = Vector3.ZERO
 var is_alive = true
+var playback 
+var direction
 
 var velocity = Vector3.ZERO
 
@@ -24,15 +28,19 @@ var target
 func _ready():
 	timer.stop()
 	space_state = get_world().direct_space_state
+	set_sprite()
 
+func set_sprite():
+	playback= anim_tree.get("parameters/playback")
+	playback.start("Idle")
 
 func _physics_process(delta):
 	if is_alive:
-		if timer.is_stopped():
-			fire()
-			timer.set_wait_time(3)
-			timer.start()
 		if target:
+			if timer.is_stopped():
+				fire()
+				timer.set_wait_time(3)
+				timer.start()
 			var result = space_state.intersect_ray(global_transform.origin, target.global_transform.origin)
 			if result and result.collider.is_in_group("Player") and test_target(target):
 				look_at(target.global_transform.origin, Vector3.UP)
@@ -58,6 +66,10 @@ func _on_HitBox_area_entered(area):
 		
 
 func fire():
+	if direction == Vector3.ZERO : 
+		playback.travel("Throw")
+	else : 
+		playback.travel("Run_Throw")
 	var tmpBlt = bullet.instance()
 	tmpBlt.velocity = Vector3(0,0,-10)
 	tmpBlt.game_type = game_type
@@ -70,21 +82,24 @@ func _on_Timer_timeout():
 
 
 func move_to_target(delta):
-	var direction
 	if target :
 		direction = (target.transform.origin - transform.origin).normalized()
 	else : 
 		direction = (objecive_vector - transform.origin).normalized()
 	move_and_slide(direction * MAX_SPEED *3 * delta, Vector3.UP)
+	if direction == Vector3.ZERO:
+		playback.travel("Idle")
+	else :
+		playback.travel("Running")
 
 func _on_Vision_body_entered(body):
-	if body.is_in_group("Player"):
+	if body.is_in_group("Player") or body.is_in_group("Dummy"):
 		target = body
 		print(body.name + " entered")
 
 
 func _on_Vision_body_exited(body):
-	if body.is_in_group("Player"):
+	if body.is_in_group("Player") or body.is_in_group("Dummy"):
 		target = null
 		print(body.name + " exited")
 
@@ -94,12 +109,13 @@ func _on_DeathTimer_timeout():
 
 
 func respawn():
+	playback.start("Idle")
 	death_timer.stop()
 	is_alive = true
 	$".".translation = initial_spawn
 
 func death():
-	#playback.travel("Death")
+	playback.travel("Death")
 	death_timer.set_wait_time(3)
 	death_timer.start()
 	is_alive = false

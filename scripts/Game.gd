@@ -19,22 +19,6 @@ export var player_team = GAMETYPE.CISEAU
 
 func _ready():
 	if player_team == GAMETYPE.CISEAU :
-		create_ent(GAMETYPE.FEUILLE,dummy)
-		create_ent(GAMETYPE.PIERRE,dummy)
-		create_ent(GAMETYPE.CISEAU,dummy)
-		update_spawn()
-		create_ent(GAMETYPE.FEUILLE,dummy)
-		create_ent(GAMETYPE.PIERRE,dummy)
-		create_ent(GAMETYPE.CISEAU,dummy)
-		update_spawn()
-		create_ent(GAMETYPE.FEUILLE,dummy)
-		create_ent(GAMETYPE.PIERRE,dummy)
-		create_ent(GAMETYPE.CISEAU,dummy)
-		update_spawn()
-		create_ent(GAMETYPE.FEUILLE,dummy)
-		create_ent(GAMETYPE.PIERRE,dummy)
-		create_ent(GAMETYPE.CISEAU,dummy)
-		update_spawn()
 		create_ent(GAMETYPE.PIERRE,dummy)
 		create_ent(GAMETYPE.FEUILLE,dummy)
 		create_ent(GAMETYPE.CISEAU,player)
