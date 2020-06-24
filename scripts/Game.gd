@@ -48,7 +48,7 @@ func create_ent(team,type):
 	$Entities.add_child(tmp_dummy)
 
 func update_spawn(): 
-	origin_20 += 5
+	origin_20 += 5+rand_range(0.0,1.0)
 	ciseau_spawn = Vector3(origin_20,1,-origin_20)
 	feuille_spawn = Vector3(origin_20,1,origin_20)
 	pierre_spawn = Vector3(-origin_20,1,origin_20-20)
